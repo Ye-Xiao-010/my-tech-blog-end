@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>3.2</id>
+        <key>3-2-category-管理分类</key>
+        <title>管理分类</title>
+        <status>completed</status>
+        <asA>管理员</asA>
+        <iWant>能够编辑和删除分类</iWant>
+        <soThat>维护分类体系</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">管理员访问分类管理页面时，应该看到所有现有分类的列表</criterion>
+        <criterion id="2">管理员应该能够编辑分类名称和描述</criterion>
+        <criterion id="3">管理员应该能够删除分类</criterion>
+        <criterion id="4">删除分类前应该显示确认对话框</criterion>
+        <criterion id="5">分类更新或删除应该在2秒内完成</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现分类列表API</task>
+        <task type="backend">实现分类编辑API</task>
+        <task type="backend">实现分类删除API</task>
+        <task type="backend">添加分类删除前的关联检查</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">实现分类列表UI</task>
+        <task type="frontend">添加分类排序和分页功能</task>
+        <task type="frontend">开发分类编辑表单</task>
+        <task type="frontend">添加删除确认对话框</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗3：分类管理 - 故事3.2</section>
+                <snippet>作为管理员，我希望能够编辑和删除分类，以便维护分类体系。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+                <kind>controller</kind>
+                <symbol>CategoryController</symbol>
+                <lines>1-100</lines>
+                <reason>分类控制器，处理分类相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/CategoryService.java</path>
+                <kind>service</kind>
+                <symbol>CategoryService</symbol>
+                <lines>1-150</lines>
+                <reason>分类服务，处理分类相关的业务逻辑</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/Categories.vue</path>
+                <kind>component</kind>
+                <symbol>Categories</symbol>
+                <lines>1-200</lines>
+                <reason>分类管理页面组件</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vue-router</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>分类列表API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/categories</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+        <interface>
+            <name>分类编辑API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/categories/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+        <interface>
+            <name>分类删除API</name>
+            <kind>REST endpoint</kind>
+            <signature>DELETE /api/categories/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>只有管理员才能编辑和删除分类</constraint>
+        <constraint>删除分类前必须显示确认对话框</constraint>
+        <constraint>分类更新或删除必须在2秒内完成</constraint>
+        <constraint>删除分类时必须检查是否有关联的文章</constraint>
+        <constraint>分类名称必须唯一</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试分类列表的显示</idea>
+            <idea criterion="2">测试分类编辑功能</idea>
+            <idea criterion="3">测试分类删除功能</idea>
+            <idea criterion="4">测试删除确认对话框</idea>
+            <idea criterion="5">测试分类更新和删除的性能</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

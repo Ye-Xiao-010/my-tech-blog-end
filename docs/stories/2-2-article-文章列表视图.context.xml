@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>2.2</id>
+        <key>2-2-article-文章列表视图</key>
+        <title>文章列表视图</title>
+        <status>ready-for-dev</status>
+        <asA>博客读者</asA>
+        <iWant>能够查看文章列表</iWant>
+        <soThat>浏览和发现感兴趣的内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">读者可以查看所有已发布的文章列表</criterion>
+        <criterion id="2">文章列表应该显示文章标题、作者、发布时间和摘要</criterion>
+        <criterion id="3">文章列表应该支持分页（每页10篇文章）</criterion>
+        <criterion id="4">文章列表应该支持按发布时间排序（最新在前）</criterion>
+        <criterion id="5">文章列表应该支持按分类筛选</criterion>
+        <criterion id="6">文章列表加载时间应该在2秒内完成</criterion>
+        <criterion id="7">文章列表应该在不同设备上（桌面、平板、手机）正常显示</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现文章列表API端点</task>
+        <task type="backend">添加文章分页功能</task>
+        <task type="backend">实现文章排序功能</task>
+        <task type="backend">实现文章分类筛选功能</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建文章列表页面</task>
+        <task type="frontend">实现文章卡片组件</task>
+        <task type="frontend">添加分页功能</task>
+        <task type="frontend">实现排序和筛选功能</task>
+        <task type="frontend">添加响应式设计</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗2：文章管理 - 故事2.2</section>
+                <snippet>作为访客或已登录用户，我希望能够在首页看到文章列表，以便浏览和发现内容。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+                <kind>controller</kind>
+                <symbol>ArticleController</symbol>
+                <lines>1-100</lines>
+                <reason>文章控制器，处理文章相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+                <kind>service</kind>
+                <symbol>ArticleService</symbol>
+                <lines>1-150</lines>
+                <reason>文章服务，处理文章相关的业务逻辑</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/Articles.vue</path>
+                <kind>component</kind>
+                <symbol>Articles</symbol>
+                <lines>1-200</lines>
+                <reason>文章列表页面组件</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vue-router</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>文章列表API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/articles</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+        </interface>
+        <interface>
+            <name>文章分页查询</name>
+            <kind>function</kind>
+            <signature>Page<Article> findArticles(int page, int size, String sort, String category)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>文章列表必须只显示已发布的文章</constraint>
+        <constraint>分页大小固定为每页10篇文章</constraint>
+        <constraint>默认排序方式为按发布时间倒序</constraint>
+        <constraint>文章列表加载时间必须在2秒内完成</constraint>
+        <constraint>必须实现响应式设计，适配不同设备</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试查看所有已发布的文章列表</idea>
+            <idea criterion="2">测试文章列表显示的字段完整性</idea>
+            <idea criterion="3">测试分页功能是否正常工作</idea>
+            <idea criterion="4">测试按发布时间排序功能</idea>
+            <idea criterion="5">测试按分类筛选功能</idea>
+            <idea criterion="7">测试响应式设计在不同设备上的表现</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

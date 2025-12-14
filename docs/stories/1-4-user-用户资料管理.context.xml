@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>1.4</id>
+        <key>1-4-user-用户资料管理</key>
+        <title>用户资料管理</title>
+        <status>drafted</status>
+        <asA>已登录用户</asA>
+        <iWant>查看和编辑我的个人资料</iWant>
+        <soThat>展示我的信息给其他用户</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">已登录用户可以访问自己的资料页面</criterion>
+        <criterion id="2">用户可以查看自己的资料信息</criterion>
+        <criterion id="3">用户可以编辑自己的用户名、头像和个人简介</criterion>
+        <criterion id="4">头像上传应该支持常见图片格式（JPG、PNG、GIF）</criterion>
+        <criterion id="5">资料更新应该在2秒内完成</criterion>
+        <criterion id="6">用户名修改后应该立即生效</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">创建用户资料API端点</task>
+        <task type="backend">实现用户资料更新功能</task>
+        <task type="backend">实现头像上传功能</task>
+        <task type="backend">添加头像存储解决方案</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建用户资料页面组件</task>
+        <task type="frontend">创建资料编辑表单组件</task>
+        <task type="frontend">实现头像上传功能</task>
+        <task type="frontend">实现资料更新提交功能</task>
+        <task type="frontend">添加成功/错误提示</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗1：用户管理 - 故事1.4</section>
+                <snippet>作为已登录用户，我希望能够查看和编辑我的个人资料，以便展示我的信息给其他用户。</snippet>
+            </doc>
+            <doc>
+                <path>docs/prd.md</path>
+                <title>产品需求文档</title>
+                <section>用户管理 - 资料管理</section>
+                <snippet>用户可以查看和编辑自己的资料，包括用户名、头像和个人简介，支持常见图片格式上传。</snippet>
+            </doc>
+            <doc>
+                <path>docs/architecture.md</path>
+                <title>架构设计文档</title>
+                <section>用户认证架构</section>
+                <snippet>使用Spring Security进行认证，JWT用于会话管理，bcrypt用于密码哈希。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/User.java</path>
+                <kind>entity</kind>
+                <symbol>User</symbol>
+                <lines>1-54</lines>
+                <reason>用户实体类，包含用户名、邮箱、密码、头像等字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/UserController.java</path>
+                <kind>controller</kind>
+                <symbol>getUserById</symbol>
+                <lines>121-144</lines>
+                <reason>后端获取用户信息API端点，已实现基本功能</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/api/userApi.js</path>
+                <kind>api</kind>
+                <symbol>userApi.getUserInfo</symbol>
+                <lines>54-56</lines>
+                <reason>前端获取用户信息API调用方法，已定义</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-security</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>commons-fileupload</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vee-validate</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>获取用户资料API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/users/profile</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/UserController.java</path>
+        </interface>
+        <interface>
+            <name>更新用户资料API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/users/profile</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/UserController.java</path>
+        </interface>
+        <interface>
+            <name>上传头像API</name>
+            <kind>REST endpoint</kind>
+            <signature>POST /api/users/avatar</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/UserController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>头像上传必须支持常见图片格式（JPG、PNG、GIF），最大文件大小限制为5MB</constraint>
+        <constraint>头像文件必须进行安全验证，防止恶意文件上传</constraint>
+        <constraint>用户名修改必须进行唯一性验证</constraint>
+        <constraint>所有资料更新操作必须进行权限验证，确保用户只能修改自己的资料</constraint>
+        <constraint>资料更新后必须更新用户会话信息</constraint>
+        <constraint>所有资料相关操作必须使用HTTPS</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试已登录用户访问资料页面</idea>
+            <idea criterion="2">测试用户查看自己的资料信息</idea>
+            <idea criterion="3">测试用户编辑资料功能</idea>
+            <idea criterion="4">测试头像上传功能，支持不同图片格式</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-28</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

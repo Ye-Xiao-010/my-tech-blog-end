@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>3.3</id>
+        <key>3-3-category-按分类查看文章</key>
+        <title>按分类查看文章</title>
+        <status>implemented</status>
+        <asA>访客或已登录用户</asA>
+        <iWant>能够按分类查看文章</iWant>
+        <soThat>找到特定主题的内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">访客或已登录用户点击一个分类时，应该看到该分类下的所有文章</criterion>
+        <criterion id="2">分类下的文章应该按最新排序</criterion>
+        <criterion id="3">页面应该显示分类名称和描述</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现分类文章列表API</task>
+        <task type="backend">添加按最新排序的逻辑</task>
+        <task type="backend">实现分类信息API</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建分类文章路由</task>
+        <task type="frontend">设计分类文章页面UI</task>
+        <task type="frontend">实现分类文章列表组件</task>
+        <task type="frontend">添加分类名称和描述展示</task>
+        <task type="frontend">实现分类SEO优化</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗3：分类管理 - 故事3.3</section>
+                <snippet>作为访客或已登录用户，我希望能够按分类查看文章，以便找到特定主题的内容。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+                <kind>controller</kind>
+                <symbol>ArticleController</symbol>
+                <lines>1-100</lines>
+                <reason>文章控制器，处理文章相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+                <kind>service</kind>
+                <symbol>ArticleService</symbol>
+                <lines>1-150</lines>
+                <reason>文章服务，处理文章相关的业务逻辑</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/Articles.vue</path>
+                <kind>component</kind>
+                <symbol>Articles</symbol>
+                <lines>1-200</lines>
+                <reason>文章列表页面组件，可复用为分类文章列表</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vue-router</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>分类文章列表API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/categories/{id}/articles</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+        <interface>
+            <name>分类信息API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/categories/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>分类文章列表必须按最新发布时间排序</constraint>
+        <constraint>必须显示分类名称和描述</constraint>
+        <constraint>必须实现SEO优化，包括标题、描述和关键词</constraint>
+        <constraint>分类文章列表必须支持分页</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试按分类查看文章功能</idea>
+            <idea criterion="2">测试文章按最新排序</idea>
+            <idea criterion="3">测试分类名称和描述的显示</idea>
+            <idea criterion="1">测试空分类的处理</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

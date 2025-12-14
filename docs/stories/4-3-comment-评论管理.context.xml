@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>4.3</id>
+        <key>4-3-comment-评论管理</key>
+        <title>评论管理</title>
+        <status>ready-for-dev</status>
+        <asA>评论作者或管理员</asA>
+        <iWant>编辑和删除我的评论</iWant>
+        <soThat>修正错误或移除不当内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">评论作者或管理员可以看到评论的编辑和删除按钮</criterion>
+        <criterion id="2">作者或管理员可以编辑评论内容</criterion>
+        <criterion id="3">作者或管理员可以删除评论</criterion>
+        <criterion id="4">删除评论前应该显示确认对话框</criterion>
+        <criterion id="5">评论更新或删除应该在2秒内完成</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现评论编辑功能</task>
+        <task type="backend">实现评论删除功能（软删除）</task>
+        <task type="backend">添加评论权限控制</task>
+        <task type="backend">更新评论API端点，支持编辑和删除</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">实现评论编辑和删除按钮UI</task>
+        <task type="frontend">实现评论编辑表单和提交功能</task>
+        <task type="frontend">实现删除确认对话框</task>
+        <task type="frontend">实现评论更新和删除的状态反馈</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗4：评论系统 - 故事4.3</section>
+                <snippet>作为评论作者或管理员，我希望能够编辑和删除我的评论，以便修正错误或移除不当内容。</snippet>
+            </doc>
+            <doc>
+                <path>docs/prd.md</path>
+                <title>产品需求文档</title>
+                <section>评论系统 - 评论管理</section>
+                <snippet>评论作者或管理员可以编辑和删除评论，删除前需要确认，使用软删除机制。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Comment.java</path>
+                <kind>entity</kind>
+                <symbol>Comment</symbol>
+                <lines>1-45</lines>
+                <reason>评论实体类，需要添加软删除字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/CommentService.java</path>
+                <kind>service</kind>
+                <symbol>CommentService</symbol>
+                <lines>1-20</lines>
+                <reason>评论服务接口，需要添加编辑和删除方法</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+                <kind>controller</kind>
+                <symbol>CommentController</symbol>
+                <lines>1-30</lines>
+                <reason>评论控制器，需要添加编辑和删除端点</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/api/commentApi.js</path>
+                <kind>api</kind>
+                <symbol>commentApi.updateComment, commentApi.deleteComment</symbol>
+                <lines>21-30</lines>
+                <reason>前端评论编辑和删除API调用方法，已定义</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>编辑评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/comments/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+        <interface>
+            <name>删除评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>DELETE /api/comments/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>只有评论作者或管理员才能编辑或删除评论</constraint>
+        <constraint>删除评论必须使用软删除，添加deleted_at字段</constraint>
+        <constraint>编辑评论时应该记录修订历史</constraint>
+        <constraint>删除操作前必须显示确认对话框</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试评论作者能看到编辑和删除按钮</idea>
+            <idea criterion="1">测试普通用户看不到其他用户评论的编辑和删除按钮</idea>
+            <idea criterion="2">测试评论编辑功能</idea>
+            <idea criterion="3">测试评论删除功能</idea>
+            <idea criterion="4">测试删除确认对话框</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

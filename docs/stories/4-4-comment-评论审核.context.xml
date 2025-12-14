@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>4.4</id>
+        <key>4-4-comment-评论审核</key>
+        <title>评论审核</title>
+        <status>done</status>
+        <asA>管理员</asA>
+        <iWant>审核新用户的评论</iWant>
+        <soThat>防止垃圾邮件和不当内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">新用户发布的评论应该进入审核队列</criterion>
+        <criterion id="2">管理员在管理后台可以看到待审核的评论</criterion>
+        <criterion id="3">管理员可以批准或拒绝评论</criterion>
+        <criterion id="4">只有批准的评论才会显示在文章页面</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">扩展评论实体类，添加审核状态字段</task>
+        <task type="backend">实现评论审核业务逻辑</task>
+        <task type="backend">添加审核状态管理API端点</task>
+        <task type="backend">实现新用户评论自动进入审核队列的逻辑</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">在管理后台实现评论审核页面</task>
+        <task type="frontend">显示待审核评论列表</task>
+        <task type="frontend">实现批准和拒绝评论的功能</task>
+        <task type="frontend">实现评论审核状态的更新反馈</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗4：评论系统 - 故事4.4</section>
+                <snippet>作为管理员，我希望能够审核新用户的评论，以便防止垃圾邮件和不当内容。</snippet>
+            </doc>
+            <doc>
+                <path>docs/prd.md</path>
+                <title>产品需求文档</title>
+                <section>评论系统 - 评论审核</section>
+                <snippet>新用户发布的评论需要进入审核队列，管理员可以在后台审核并批准或拒绝评论，只有批准的评论才会显示。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Comment.java</path>
+                <kind>entity</kind>
+                <symbol>Comment</symbol>
+                <lines>1-45</lines>
+                <reason>评论实体类，需要添加审核状态字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/CommentService.java</path>
+                <kind>service</kind>
+                <symbol>CommentService</symbol>
+                <lines>1-20</lines>
+                <reason>评论服务接口，需要添加审核相关方法</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+                <kind>controller</kind>
+                <symbol>CommentController</symbol>
+                <lines>1-30</lines>
+                <reason>评论控制器，需要添加审核相关端点</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/admin/AdminDashboard.vue</path>
+                <kind>view</kind>
+                <symbol>AdminDashboard</symbol>
+                <lines>1-50</lines>
+                <reason>管理后台仪表盘，需要添加评论审核入口</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>获取待审核评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/admin/comments/pending</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+        <interface>
+            <name>批准评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/admin/comments/{id}/approve</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+        <interface>
+            <name>拒绝评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/admin/comments/{id}/reject</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>只有新用户（注册时间小于7天或评论数少于5条）的评论需要审核</constraint>
+        <constraint>审核状态应该包括：待审核、已批准、已拒绝</constraint>
+        <constraint>只有已批准的评论才会显示在文章页面</constraint>
+        <constraint>评论审核操作应该记录日志</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试新用户评论自动进入审核队列</idea>
+            <idea criterion="2">测试管理员能看到待审核评论</idea>
+            <idea criterion="3">测试管理员可以批准评论</idea>
+            <idea criterion="3">测试管理员可以拒绝评论</idea>
+            <idea criterion="4">测试只有已批准的评论显示在文章页面</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

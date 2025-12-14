@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>3.1</id>
+        <key>3-1-category-创建分类</key>
+        <title>创建分类</title>
+        <status>completed</status>
+        <asA>管理员</asA>
+        <iWant>能够创建文章分类</iWant>
+        <soThat>组织和管理文章内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">管理员访问分类管理页面时，应该看到创建分类的选项</criterion>
+        <criterion id="2">管理员应该能够输入分类名称和描述</criterion>
+        <criterion id="3">分类创建应该在2秒内完成</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">创建分类实体类和数据库表</task>
+        <task type="backend">实现分类创建API端点</task>
+        <task type="backend">添加分类名称唯一性验证</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建分类管理页面</task>
+        <task type="frontend">实现分类创建表单</task>
+        <task type="frontend">添加分类名称唯一性验证</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗3：分类管理 - 故事3.1</section>
+                <snippet>作为管理员，我希望能够创建文章分类，以便组织和管理文章内容。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Category.java</path>
+                <kind>entity</kind>
+                <symbol>Category</symbol>
+                <lines>1-54</lines>
+                <reason>分类实体类，包含名称、描述等字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+                <kind>controller</kind>
+                <symbol>CategoryController</symbol>
+                <lines>1-100</lines>
+                <reason>分类控制器，处理分类相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/Categories.vue</path>
+                <kind>component</kind>
+                <symbol>Categories</symbol>
+                <lines>1-200</lines>
+                <reason>分类管理页面组件</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vue-router</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>分类创建API</name>
+            <kind>REST endpoint</kind>
+            <signature>POST /api/categories</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CategoryController.java</path>
+        </interface>
+        <interface>
+            <name>分类名称唯一性验证</name>
+            <kind>function</kind>
+            <signature>boolean isCategoryNameUnique(String name)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/CategoryService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>分类名称必须唯一</constraint>
+        <constraint>分类创建过程必须在2秒内完成</constraint>
+        <constraint>只有管理员才能创建分类</constraint>
+        <constraint>分类名称不能为空，长度不能超过50个字符</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试管理员访问分类管理页面时是否显示创建分类选项</idea>
+            <idea criterion="2">测试分类创建表单是否包含名称和描述字段</idea>
+            <idea criterion="3">测试分类创建性能是否在2秒内完成</idea>
+            <idea criterion="2">测试分类名称唯一性验证</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

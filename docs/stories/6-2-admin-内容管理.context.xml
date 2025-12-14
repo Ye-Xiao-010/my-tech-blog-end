@@ -1,0 +1,77 @@
+<story-context id="docs/stories/6-2-admin-内容管理" v="1.0">
+  <metadata>
+    <epicId>epic-6</epicId>
+    <storyId>6-2-admin-内容管理</storyId>
+    <title>管理员内容管理</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/6-2-admin-内容管理.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>博客管理员</asA>
+    <iWant>能够在后台管理系统中管理所有内容</iWant>
+    <soThat>监控和维护平台上的文章、分类和评论</soThat>
+    <tasks>
+      - 设计管理员内容管理界面
+      - 实现内容管理API
+      - 实现前端内容管理功能
+      - 编写测试用例
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. 管理员可以查看所有文章列表，包括标题、作者、发布时间、状态
+    2. 管理员可以搜索和筛选文章
+    3. 管理员可以发布、编辑、删除任何文章
+    4. 管理员可以审核、批准或拒绝评论
+    5. 管理员可以管理分类（创建、编辑、删除）
+    6. 管理员可以查看内容统计数据
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      - docs/epics.md#史诗6：管理后台
+      - docs/prd.md#管理员功能
+    </docs>
+    <code>
+      - 后端：ArticleController.java, ArticleService.java, ArticleServiceImpl.java, CommentController.java, CommentService.java, CommentServiceImpl.java, CategoryController.java, CategoryService.java, CategoryServiceImpl.java
+      - 前端：src/views/admin/AdminArticles.vue, src/views/admin/AdminComments.vue, src/views/admin/AdminCategories.vue
+    </code>
+    <dependencies>
+      - Spring Boot Security
+      - JWT
+      - Vue 3
+      - Element Plus
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - 遵循现有的Spring Boot + Vue 3架构
+    - 使用JWT进行身份验证和授权
+    - 权限管理基于角色的访问控制(RBAC)
+  </constraints>
+  <interfaces>
+    - 后端API接口：/api/admin/articles, /api/admin/comments, /api/admin/categories
+    - 前端组件：AdminArticles.vue, AdminComments.vue, AdminCategories.vue
+  </interfaces>
+  <tests>
+    <standards>
+      - API测试覆盖率达到80%以上
+      - 前端组件测试覆盖率达到70%以上
+    </standards>
+    <locations>
+      - 后端测试：src/test/java/com/xiaofei/my_tech_blog/service/
+      - 前端测试：my-tech-blog-frontend/src/tests/
+    </locations>
+    <ideas>
+      - 测试管理员查看文章列表功能
+      - 测试管理员搜索和筛选文章功能
+      - 测试管理员发布、编辑、删除文章功能
+      - 测试管理员审核、批准或拒绝评论功能
+      - 测试管理员管理分类功能
+      - 测试管理员查看内容统计数据功能
+    </ideas>
+  </tests>
+</story-context>

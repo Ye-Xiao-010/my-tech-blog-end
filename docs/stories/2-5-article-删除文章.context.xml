@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>2.5</id>
+        <key>2-5-article-删除文章</key>
+        <title>删除文章</title>
+        <status>done</status>
+        <asA>博客作者</asA>
+        <iWant>能够删除自己的文章</iWant>
+        <soThat>管理和清理自己的内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">作者可以删除自己的文章</criterion>
+        <criterion id="2">删除文章前应该显示确认提示</criterion>
+        <criterion id="3">删除文章后应该从列表中移除</criterion>
+        <criterion id="4">删除文章应该同时删除相关评论</criterion>
+        <criterion id="5">删除操作应该在1秒内完成</criterion>
+        <criterion id="6">系统应该记录文章删除日志</criterion>
+        <criterion id="7">只有文章作者可以删除文章</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现文章删除API端点</task>
+        <task type="backend">添加文章删除确认逻辑</task>
+        <task type="backend">实现级联删除评论功能</task>
+        <task type="backend">添加删除日志记录</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">添加文章删除按钮</task>
+        <task type="frontend">实现删除确认对话框</task>
+        <task type="frontend">添加删除成功提示</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗2：文章管理 - 故事2.5</section>
+                <snippet>作为文章作者或管理员，我希望能够删除文章，以便移除不再需要的内容。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+                <kind>controller</kind>
+                <symbol>ArticleController</symbol>
+                <lines>1-100</lines>
+                <reason>文章控制器，处理文章相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+                <kind>service</kind>
+                <symbol>ArticleService</symbol>
+                <lines>1-150</lines>
+                <reason>文章服务，处理文章相关的业务逻辑</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/ArticleDetail.vue</path>
+                <kind>component</kind>
+                <symbol>ArticleDetail</symbol>
+                <lines>1-300</lines>
+                <reason>文章详情页面组件，包含删除按钮</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>vue-router</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>文章删除API</name>
+            <kind>REST endpoint</kind>
+            <signature>DELETE /api/articles/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+        </interface>
+        <interface>
+            <name>文章删除权限验证</name>
+            <kind>function</kind>
+            <signature>boolean canDeleteArticle(Long articleId, Long userId)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>只有文章作者才能删除自己的文章</constraint>
+        <constraint>删除文章前必须显示确认提示</constraint>
+        <constraint>必须实现级联删除评论功能</constraint>
+        <constraint>删除操作必须在1秒内完成</constraint>
+        <constraint>必须记录文章删除日志</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试作者删除自己文章的权限</idea>
+            <idea criterion="2">测试删除确认提示</idea>
+            <idea criterion="3">测试删除后文章从列表中移除</idea>
+            <idea criterion="4">测试级联删除评论功能</idea>
+            <idea criterion="7">测试非作者删除文章的权限控制</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

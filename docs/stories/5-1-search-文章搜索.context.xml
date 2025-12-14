@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>5.1</id>
+        <key>5-1-search-文章搜索</key>
+        <title>文章搜索</title>
+        <status>ready-for-dev</status>
+        <asA>博客用户</asA>
+        <iWant>通过关键词搜索文章</iWant>
+        <soThat>快速找到我感兴趣的内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">用户可以在搜索框中输入关键词搜索文章</criterion>
+        <criterion id="2">搜索结果应该包含文章标题、摘要和发布日期</criterion>
+        <criterion id="3">搜索结果应该按相关性排序</criterion>
+        <criterion id="4">搜索过程应该在1秒内完成</criterion>
+        <criterion id="5">搜索结果应该支持分页，每页显示10条</criterion>
+        <criterion id="6">搜索结果应该高亮显示匹配的关键词</criterion>
+        <criterion id="7">空搜索应该返回所有文章</criterion>
+        <criterion id="8">没有匹配结果时应该显示友好提示</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">创建文章搜索API端点</task>
+        <task type="backend">实现全文搜索功能（使用Elasticsearch或数据库全文索引）</task>
+        <task type="backend">实现搜索结果排序和分页</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建搜索框组件</task>
+        <task type="frontend">实现搜索提交功能</task>
+        <task type="frontend">创建搜索结果页面</task>
+        <task type="frontend">实现搜索结果高亮显示</task>
+        <task type="frontend">实现分页功能</task>
+        <task type="frontend">添加空结果提示</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗5：搜索功能 - 故事5.1</section>
+                <snippet>作为博客用户，我希望能够通过关键词搜索文章，以便快速找到我感兴趣的内容。</snippet>
+            </doc>
+            <doc>
+                <path>docs/prd.md</path>
+                <title>产品需求文档</title>
+                <section>搜索功能 - 文章搜索</section>
+                <snippet>用户可以通过关键词搜索文章，搜索结果应该包含文章标题、摘要和发布日期，按相关性排序，支持分页和关键词高亮。</snippet>
+            </doc>
+            <doc>
+                <path>docs/architecture.md</path>
+                <title>架构设计文档</title>
+                <section>搜索架构</section>
+                <snippet>使用全文搜索技术实现文章搜索功能，支持快速响应和准确匹配。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Article.java</path>
+                <kind>entity</kind>
+                <symbol>Article</symbol>
+                <lines>1-100</lines>
+                <reason>文章实体类，包含标题、内容、摘要等字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/repository/ArticleRepository.java</path>
+                <kind>repository</kind>
+                <symbol>ArticleRepository</symbol>
+                <lines>1-50</lines>
+                <reason>文章数据访问接口，用于查询文章</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>文章搜索API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/articles/search</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+        </interface>
+        <interface>
+            <name>搜索服务</name>
+            <kind>service</kind>
+            <signature>Page<Article> searchArticles(String keyword, Pageable pageable)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>搜索响应时间必须在1秒内</constraint>
+        <constraint>搜索结果必须按相关性排序</constraint>
+        <constraint>搜索结果必须高亮显示匹配的关键词</constraint>
+        <constraint>必须支持中英文混合搜索</constraint>
+        <constraint>必须支持分页，每页显示10条结果</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试正常搜索流程</idea>
+            <idea criterion="2">测试搜索结果包含正确的字段</idea>
+            <idea criterion="3">测试搜索结果排序</idea>
+            <idea criterion="4">测试搜索响应时间</idea>
+            <idea criterion="5">测试搜索结果分页</idea>
+            <idea criterion="6">测试搜索结果关键词高亮</idea>
+            <idea criterion="7">测试空搜索返回所有文章</idea>
+            <idea criterion="8">测试没有匹配结果时的提示</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-12-01</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

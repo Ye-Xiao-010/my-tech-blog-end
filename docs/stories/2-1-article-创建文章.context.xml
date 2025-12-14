@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>2.1</id>
+        <key>2-1-article-创建文章</key>
+        <title>创建文章</title>
+        <status>done</status>
+        <asA>博客作者</asA>
+        <iWant>能够创建和发布新文章</iWant>
+        <soThat>与读者分享我的知识和见解</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">作者可以创建包含标题、内容、分类和标签的文章</criterion>
+        <criterion id="2">文章内容支持富文本编辑</criterion>
+        <criterion id="3">作者可以选择文章是否发布</criterion>
+        <criterion id="4">作者可以设置文章的发布时间</criterion>
+        <criterion id="5">创建的文章应该包含作者信息和创建时间</criterion>
+        <criterion id="6">文章创建过程应该在3秒内完成</criterion>
+        <criterion id="7">系统应该验证文章标题和内容的长度（标题至少5个字符，内容至少100个字符）</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">创建文章实体类和数据库表</task>
+        <task type="backend">实现文章CRUD API</task>
+        <task type="backend">添加文章验证逻辑</task>
+        <task type="backend">实现文章分类和标签关联</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建文章编辑页面</task>
+        <task type="frontend">实现富文本编辑器集成</task>
+        <task type="frontend">添加文章分类和标签选择功能</task>
+        <task type="frontend">实现文章发布状态切换</task>
+        <task type="frontend">添加文章预览功能</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗2：文章管理 - 故事2.1</section>
+                <snippet>作为已登录用户，我希望能够使用富文本编辑器创建文章，以便分享我的知识和想法。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Article.java</path>
+                <kind>entity</kind>
+                <symbol>Article</symbol>
+                <lines>1-54</lines>
+                <reason>文章实体类，包含标题、内容、分类、标签等字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+                <kind>controller</kind>
+                <symbol>ArticleController</symbol>
+                <lines>1-100</lines>
+                <reason>文章控制器，处理文章相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/ArticleEdit.vue</path>
+                <kind>component</kind>
+                <symbol>ArticleEdit</symbol>
+                <lines>1-200</lines>
+                <reason>文章编辑页面组件</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>wangEditor</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>创建文章API</name>
+            <kind>REST endpoint</kind>
+            <signature>POST /api/articles</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+        </interface>
+        <interface>
+            <name>文章验证</name>
+            <kind>function</kind>
+            <signature>boolean validateArticle(Article article)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>文章内容必须支持富文本编辑</constraint>
+        <constraint>文章标题至少5个字符，内容至少100个字符</constraint>
+        <constraint>文章创建过程必须在3秒内完成</constraint>
+        <constraint>必须实现文章分类和标签的关联</constraint>
+        <constraint>必须支持文章的草稿和发布状态</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试创建包含标题、内容、分类和标签的文章</idea>
+            <idea criterion="2">测试富文本编辑功能</idea>
+            <idea criterion="3">测试文章发布状态切换</idea>
+            <idea criterion="7">测试文章标题和内容长度验证</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

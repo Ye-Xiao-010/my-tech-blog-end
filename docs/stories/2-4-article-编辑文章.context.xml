@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>2.4</id>
+        <key>2-4-article-编辑文章</key>
+        <title>编辑文章</title>
+        <status>in_progress</status>
+        <asA>博客作者</asA>
+        <iWant>能够编辑已发布的文章</iWant>
+        <soThat>更新和修正已发布的内容</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">作者可以编辑自己已发布的文章</criterion>
+        <criterion id="2">编辑页面应该包含标题、内容、分类和标签字段</criterion>
+        <criterion id="3">编辑页面应该支持富文本编辑</criterion>
+        <criterion id="4">作者可以选择是否立即发布更新</criterion>
+        <criterion id="5">编辑后的文章应该保留原始发布时间和更新时间</criterion>
+        <criterion id="6">文章编辑过程应该在3秒内完成</criterion>
+        <criterion id="7">系统应该验证编辑后的文章标题和内容长度</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">实现文章编辑API端点</task>
+        <task type="backend">添加文章更新时间字段</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">创建文章编辑页面</task>
+        <task type="frontend">实现富文本编辑器集成</task>
+        <task type="frontend">添加文章分类和标签选择功能</task>
+        <task type="frontend">实现文章发布状态切换</task>
+        <task type="frontend">添加文章预览功能</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗2：文章管理 - 故事2.4</section>
+                <snippet>作为文章作者，我希望能够编辑我已发布的文章，以便更新内容或修复错误。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Article.java</path>
+                <kind>entity</kind>
+                <symbol>Article</symbol>
+                <lines>1-54</lines>
+                <reason>文章实体类，包含标题、内容、分类、标签等字段</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+                <kind>controller</kind>
+                <symbol>ArticleController</symbol>
+                <lines>1-100</lines>
+                <reason>文章控制器，处理文章相关的HTTP请求</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/views/ArticleEdit.vue</path>
+                <kind>component</kind>
+                <symbol>ArticleEdit</symbol>
+                <lines>1-200</lines>
+                <reason>文章编辑页面组件</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-web</dependency>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+                <dependency>spring-boot-starter-security</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+                <dependency>wangEditor</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>文章编辑API</name>
+            <kind>REST endpoint</kind>
+            <signature>PUT /api/articles/{id}</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/ArticleController.java</path>
+        </interface>
+        <interface>
+            <name>文章权限验证</name>
+            <kind>function</kind>
+            <signature>boolean canEditArticle(Long articleId, Long userId)</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/ArticleService.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>只有文章作者才能编辑自己的文章</constraint>
+        <constraint>文章内容必须支持富文本编辑</constraint>
+        <constraint>文章标题至少5个字符，内容至少100个字符</constraint>
+        <constraint>文章编辑过程必须在3秒内完成</constraint>
+        <constraint>必须保留原始发布时间，添加更新时间</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试作者编辑自己文章的权限</idea>
+            <idea criterion="2">测试编辑页面字段完整性</idea>
+            <idea criterion="3">测试富文本编辑功能</idea>
+            <idea criterion="5">测试文章更新时间的记录</idea>
+            <idea criterion="7">测试编辑后文章标题和内容长度验证</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>

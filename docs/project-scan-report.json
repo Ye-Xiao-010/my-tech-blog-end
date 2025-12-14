@@ -1,0 +1,84 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2025-11-28T10:55:00.000Z",
+    "last_updated": "2025-11-28T10:56:00.000Z"
+  },
+  "mode": "initial_scan",
+  "scan_level": "quick",
+  "project_root": "d:\\my-tech-blog-copy",
+  "output_folder": "d:\\my-tech-blog-copy\\docs",
+  "completed_steps": [
+    {
+      "step": "step_1",
+      "status": "completed",
+      "timestamp": "2025-11-28T10:56:00.000Z",
+      "summary": "Classified as multi-part with 2 parts"
+    },
+    {
+      "step": "step_2",
+      "status": "completed",
+      "timestamp": "2025-11-28T10:57:00.000Z",
+      "summary": "Found existing documentation and gathered project context"
+    },
+    {
+      "step": "step_3",
+      "status": "completed",
+      "timestamp": "2025-11-28T10:58:00.000Z",
+      "summary": "Analyzed technology stack for each part"
+    },
+    {
+      "step": "step_5",
+      "status": "completed",
+      "timestamp": "2025-11-28T10:59:00.000Z",
+      "summary": "Source tree documented"
+    },
+    {
+      "step": "step_9",
+      "status": "completed",
+      "timestamp": "2025-11-28T11:00:00.000Z",
+      "summary": "Generated project overview documentation"
+    },
+    {
+      "step": "step_10",
+      "status": "completed",
+      "timestamp": "2025-11-28T11:01:00.000Z",
+      "summary": "Master index generated"
+    },
+    {
+      "step": "step_11",
+      "status": "completed",
+      "timestamp": "2025-11-28T11:02:00.000Z",
+      "summary": "Validation and review complete"
+    },
+    {
+      "step": "step_12",
+      "status": "completed",
+      "timestamp": "2025-11-28T11:03:00.000Z",
+      "summary": "Workflow complete"
+    }
+  ],
+  "current_step": "completed",
+  "findings": {
+    "project_classification": "multi-part project with frontend and backend components",
+    "project_types": [
+      {
+        "part_id": "frontend",
+        "project_type_id": "web",
+        "display_name": "Web Frontend"
+      },
+      {
+        "part_id": "backend",
+        "project_type_id": "backend",
+        "display_name": "Java Backend"
+      }
+    ],
+    "technology_stack": {
+      "frontend": "Vue.js, Vite, JavaScript/TypeScript",
+      "backend": "Java"
+    },
+    "batches_completed": []
+  },
+  "outputs_generated": ["project-scan-report.json", "project-overview.md", "index.md"],
+  "resume_instructions": "Workflow completed"
+}

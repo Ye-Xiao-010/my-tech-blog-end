@@ -1,0 +1,133 @@
+# BMad Method Workflow Status
+# Generated on: 2025-11-28
+# Project: my-tech-blog-copy
+# Track: bmad-method
+# Type: brownfield
+
+method_name: "BMad Method"
+track: "bmad-method"
+field_type: "brownfield"
+description: "Complete product and system design for complex brownfield work"
+generated: "2025-11-28"
+
+# Workflow Path
+workflow_items:
+  - prerequisite: true
+    name: "Documentation"
+    conditional: "if_undocumented"
+    note: "NOT a phase - prerequisite for brownfield without docs"
+    workflows:
+      - id: "document-project"
+        required: true
+        agent: "analyst"
+        command: "document-project"
+        output: "Comprehensive project documentation"
+        purpose: "Understand existing codebase before planning"
+        status: "d:\my-tech-blog-copy\docs\index.md"
+
+  - phase: 0
+    name: "Discovery (Optional)"
+    optional: true
+    note: "User-selected during workflow-init"
+    workflows:
+      - id: "brainstorm-project"
+        optional: true
+        agent: "analyst"
+        command: "brainstorm-project"
+        included_by: "user_choice"
+        status: "d:\my-tech-blog-copy\docs\brainstorming-session-results.md"
+
+      - id: "research"
+        optional: true
+        agent: "analyst"
+        command: "research"
+        included_by: "user_choice"
+        status: "pending"
+
+      - id: "product-brief"
+        optional: true
+        agent: "analyst"
+        command: "product-brief"
+        included_by: "user_choice"
+        note: "Optional for brownfield, less common than greenfield"
+        status: "pending"
+
+  - phase: 1
+    name: "Planning"
+    required: true
+    workflows:
+      - id: "prd"
+        required: true
+        agent: "pm"
+        command: "prd"
+        output: "PRD focused on new features/changes"
+        note: "Must consider existing system constraints"
+        status: "d:\my-tech-blog-copy\docs\prd.md"
+
+      - id: "validate-prd"
+        optional: true
+        agent: "pm"
+        command: "validate-prd"
+        status: "pending"
+
+      - id: "create-design"
+        conditional: "if_has_ui"
+        agent: "ux-designer"
+        command: "create-design"
+        status: "d:\my-tech-blog-copy\docs\ux-design-spec.md"
+
+  - phase: 2
+    name: "Solutioning"
+    required: true
+    workflows:
+      - id: "create-architecture"
+        recommended: true
+        agent: "architect"
+        command: "create-architecture"
+        output: "Integration architecture - solution design for THIS project"
+        note: "HIGHLY RECOMMENDED: Distills massive brownfield context into focused solution design. Prevents agent confusion."
+        status: "d:\my-tech-blog-copy\docs\architecture.md"
+
+      - id: "create-epics-and-stories"
+        required: true
+        agent: "pm"
+        command: "create-epics-and-stories"
+        note: "Required: Break down PRD into implementable epics and stories with full context (PRD + UX + Architecture)"
+        status: "d:\my-tech-blog-copy\docs\epics.md"
+
+      - id: "test-design"
+        recommended: true
+        agent: "tea"
+        command: "test-design"
+        output: "System-level testability review"
+        note: "Testability assessment before gate check - auto-detects system-level mode"
+        status: "pending"
+
+      - id: "validate-architecture"
+        optional: true
+        agent: "architect"
+        command: "validate-architecture"
+        status: "pending"
+
+      - id: "implementation-readiness"
+        required: true
+        agent: "architect"
+        command: "implementation-readiness"
+        note: "Validates PRD + UX + Architecture + Epics cohesion before implementation"
+        status: "d:\my-tech-blog-copy\docs\implementation-readiness-report.md"
+
+  - phase: 3
+    name: "Implementation"
+    required: true
+    workflows:
+      - id: "sprint-planning"
+        required: true
+        agent: "sm"
+        command: "sprint-planning"
+        note: "Creates sprint plan with stories"
+        status: "d:\my-tech-blog-copy\docs\sprint-status.yaml"
+
+# Next Steps
+next_workflow: "implementation-readiness"
+next_agent: "architect"
+next_command: "/bmad:bmm:workflows:implementation-readiness"

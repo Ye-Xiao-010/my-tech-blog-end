@@ -1,0 +1,77 @@
+<story-context id="docs/stories/6-1-admin-用户管理" v="1.0">
+  <metadata>
+    <epicId>epic-6</epicId>
+    <storyId>6-1-admin-用户管理</storyId>
+    <title>管理员用户管理</title>
+    <status>done</status>
+    <generatedAt>2025-12-01</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/6-1-admin-用户管理.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>博客管理员</asA>
+    <iWant>能够在后台管理系统中管理用户</iWant>
+    <soThat>监控和管理平台上的所有用户账户</soThat>
+    <tasks>
+      - 设计管理员用户管理界面
+      - 实现用户管理API
+      - 实现前端用户管理功能
+      - 编写测试用例
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. 管理员可以查看所有用户列表，包括用户名、邮箱、注册时间和状态
+    2. 管理员可以搜索和筛选用户
+    3. 管理员可以禁用/启用用户账户
+    4. 管理员可以编辑用户信息
+    5. 管理员可以删除用户账户
+    6. 管理员可以为用户分配角色和权限
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      - docs/epics.md#史诗6：管理后台
+      - docs/prd.md#管理员功能
+    </docs>
+    <code>
+      - 后端：UserController.java, UserService.java, UserServiceImpl.java
+      - 前端：src/views/admin/AdminUsers.vue
+    </code>
+    <dependencies>
+      - Spring Boot Security
+      - JWT
+      - Vue 3
+      - Element Plus
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - 遵循现有的Spring Boot + Vue 3架构
+    - 使用JWT进行身份验证和授权
+    - 权限管理基于角色的访问控制(RBAC)
+  </constraints>
+  <interfaces>
+    - 后端API接口：/api/admin/users
+    - 前端组件：AdminUsers.vue
+  </interfaces>
+  <tests>
+    <standards>
+      - API测试覆盖率达到80%以上
+      - 前端组件测试覆盖率达到70%以上
+    </standards>
+    <locations>
+      - 后端测试：src/test/java/com/xiaofei/my_tech_blog/service/
+      - 前端测试：my-tech-blog-frontend/src/tests/
+    </locations>
+    <ideas>
+      - 测试管理员查看用户列表功能
+      - 测试管理员搜索和筛选用户功能
+      - 测试管理员禁用/启用用户账户功能
+      - 测试管理员编辑用户信息功能
+      - 测试管理员删除用户账户功能
+      - 测试管理员为用户分配角色和权限功能
+    </ideas>
+  </tests>
+</story-context>

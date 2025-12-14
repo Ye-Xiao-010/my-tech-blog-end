@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<storyContext>
+    <!-- 故事基本信息 -->
+    <story>
+        <id>4.2</id>
+        <key>4-2-comment-回复评论</key>
+        <title>回复评论</title>
+        <status>done</status>
+        <asA>已登录用户</asA>
+        <iWant>回复其他用户的评论</iWant>
+        <soThat>进行更深入的讨论</soThat>
+    </story>
+
+    <!-- 验收标准 -->
+    <acceptanceCriteria>
+        <criterion id="1">已登录用户可以看到每条评论的回复按钮</criterion>
+        <criterion id="2">点击回复按钮应该打开回复输入框</criterion>
+        <criterion id="3">回复应该显示为嵌套结构</criterion>
+        <criterion id="4">回复应该在2秒内发布</criterion>
+    </acceptanceCriteria>
+
+    <!-- 任务列表 -->
+    <tasks>
+        <task type="backend">扩展评论实体类，支持回复功能</task>
+        <task type="backend">更新评论Repository接口，支持查询回复</task>
+        <task type="backend">实现回复评论的业务逻辑</task>
+        <task type="backend">更新评论API端点，支持回复功能</task>
+        <task type="backend">编写单元测试和集成测试</task>
+        <task type="frontend">实现评论回复UI，包括回复按钮和输入框</task>
+        <task type="frontend">实现回复提交功能</task>
+        <task type="frontend">显示嵌套的回复结构</task>
+        <task type="frontend">添加成功/错误提示</task>
+        <task type="frontend">编写前端测试</task>
+    </tasks>
+
+    <!-- 相关文档 -->
+    <artifacts>
+        <docs>
+            <doc>
+                <path>docs/epics.md</path>
+                <title>史诗分解文档</title>
+                <section>史诗4：评论系统 - 故事4.2</section>
+                <snippet>作为已登录用户，我希望能够回复其他用户的评论，以便进行更深入的讨论。</snippet>
+            </doc>
+            <doc>
+                <path>docs/prd.md</path>
+                <title>产品需求文档</title>
+                <section>评论系统 - 回复评论</section>
+                <snippet>用户可以回复其他用户的评论，回复显示为嵌套结构，支持多级回复。</snippet>
+            </doc>
+        </docs>
+
+        <!-- 现有代码 -->
+        <code>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/entity/Comment.java</path>
+                <kind>entity</kind>
+                <symbol>Comment</symbol>
+                <lines>1-45</lines>
+                <reason>评论实体类，需要扩展支持回复功能</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/repository/CommentRepository.java</path>
+                <kind>repository</kind>
+                <symbol>CommentRepository</symbol>
+                <lines>1-15</lines>
+                <reason>评论数据访问接口，需要更新支持查询回复</reason>
+            </item>
+            <item>
+                <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/service/CommentService.java</path>
+                <kind>service</kind>
+                <symbol>CommentService</symbol>
+                <lines>1-20</lines>
+                <reason>评论服务接口，需要添加回复功能</reason>
+            </item>
+            <item>
+                <path>my-tech-blog-frontend/src/api/commentApi.js</path>
+                <kind>api</kind>
+                <symbol>commentApi.replyComment</symbol>
+                <lines>11-20</lines>
+                <reason>前端回复评论API调用方法，已定义</reason>
+            </item>
+        </code>
+
+        <!-- 依赖关系 -->
+        <dependencies>
+            <backend>
+                <dependency>spring-boot-starter-data-jpa</dependency>
+            </backend>
+            <frontend>
+                <dependency>vue</dependency>
+                <dependency>axios</dependency>
+            </frontend>
+        </dependencies>
+    </artifacts>
+
+    <!-- 接口定义 -->
+    <interfaces>
+        <interface>
+            <name>回复评论API</name>
+            <kind>REST endpoint</kind>
+            <signature>POST /api/comments/{id}/replies</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+        <interface>
+            <name>获取评论回复API</name>
+            <kind>REST endpoint</kind>
+            <signature>GET /api/comments/{id}/replies</signature>
+            <path>my-tech-blog/src/main/java/com/xiaofei/my_tech_blog/controller/CommentController.java</path>
+        </interface>
+    </interfaces>
+
+    <!-- 开发约束 -->
+    <constraints>
+        <constraint>评论回复应该支持至少3级嵌套</constraint>
+        <constraint>回复应该显示被回复用户的用户名</constraint>
+        <constraint>回复输入框应该自动聚焦</constraint>
+        <constraint>输入验证必须同时在前端和后端进行</constraint>
+    </constraints>
+
+    <!-- 测试信息 -->
+    <tests>
+        <standards>使用JUnit进行后端单元测试，使用Vue Test Utils进行前端测试，集成测试使用TestRestTemplate</standards>
+        <locations>
+            <backend>my-tech-blog/src/test/java</backend>
+            <frontend>my-tech-blog-frontend/src/tests</frontend>
+        </locations>
+        <ideas>
+            <idea criterion="1">测试每条评论显示回复按钮</idea>
+            <idea criterion="2">测试点击回复按钮打开输入框</idea>
+            <idea criterion="3">测试回复显示为嵌套结构</idea>
+            <idea criterion="4">测试回复发布响应时间</idea>
+        </ideas>
+    </tests>
+
+    <!-- 生成信息 -->
+    <generated>
+        <date>2025-11-30</date>
+        <by>SM</by>
+        <version>1.0</version>
+    </generated>
+</storyContext>
